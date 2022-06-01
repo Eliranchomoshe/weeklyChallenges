@@ -1,0 +1,117 @@
+/* Challenge: 
+ * Given an integer x, return true if x is palindrome integer.
+ * An integer is a palindrome when it reads the same backward as forward
+ */
+ 
+#include <iostream>
+using namespace std;
+
+// gets int length
+int getLength(int x) 
+{   
+    int count = 0;
+    while (x > 0) 
+    {
+        x /= 10;
+        count++;
+    }    
+    return count;
+}
+
+// returns value of exponential function 
+int power(int y, int exponent) 
+{
+    int temp = y;
+    for(int i = 1; i < exponent; i++)
+    {   
+       temp *= y;
+    }
+    return temp;
+}
+
+// splits int into num array
+int* getNumArray(int z, int length) 
+{
+    int* numArray = new int[length];
+    for(int i = 0; i < length - 1; i++)
+    { 
+        numArray[i] = z / power(10, length - (i +1));
+        z = z % power(10, length - (i +1));
+    }
+    
+    numArray[length - 1] = z;
+    return numArray;
+}
+
+// checks if int if palindrome
+bool isPal(int testNum)
+{
+    bool pal = true;
+    int length= getLength(testNum); 
+    
+    int* temp = getNumArray(testNum, length); 
+    for(int i = 0; i < length /2 ; i++)
+    {
+        if (temp[i] != temp[length - 1 - i]) 
+        {
+            
+            pal = false;
+        }
+    }  
+    
+    return pal;
+}
+
+// print out helper
+void printOut(bool palidrome) 
+{
+     
+    if(palidrome) 
+    {
+        cout << "Yep! It's a palidrome"<< endl;
+    } 
+    else 
+    {
+        cout << "Nope! It's not a palidrome"<< endl;
+    }
+    
+    
+}
+
+// main driver 
+int main()
+{
+    // These should be true
+    int testNum = 1231321;
+    bool palidrome = isPal(testNum);
+    cout << testNum << " => ";
+    printOut(palidrome); 
+    
+    testNum = 67677676;
+    palidrome = isPal(testNum);
+    cout << testNum << " => ";
+    printOut(palidrome); 
+    
+    testNum = 5675765;
+    palidrome = isPal(testNum);
+    cout << testNum << " => ";
+    printOut(palidrome); 
+     
+     // These should be true
+    testNum = 123456;
+    palidrome = isPal(testNum);
+    cout << testNum << " => ";
+    printOut(palidrome); 
+    
+    testNum = 5555558;
+    palidrome = isPal(testNum);
+    cout << testNum << " => ";
+    printOut(palidrome); 
+    
+    testNum = 5673783;
+    palidrome = isPal(testNum);
+    cout << testNum << " => ";
+    printOut(palidrome); 
+
+    return 0;
+}
