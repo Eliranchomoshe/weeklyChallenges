@@ -1,0 +1,83 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// helper function that takes in single roman numeral and returns its value... for the most part
+int converterHelper(char r) 
+{
+    int num = 0;
+    switch(r) 
+    {
+        case 'I':
+            num = 1;
+            break;
+        case 'V':
+            num = 5;
+            break;
+        case 'X':
+            num = 10;
+            break;
+        case 'L':
+            num = 50;
+            break;
+        case 'C': 
+            num = 100;
+            break;
+        case 'D':
+            num = 500;
+            break;
+        case 'M':
+            num = 1000;
+            break;
+    }
+    return num;
+}
+
+// main convertor function
+int romanToIntConverter(string romanNum) 
+{
+    bool check1;
+    bool check2;
+    
+    int a;
+    int b;
+    int mult5;
+    int mult10;
+    
+    int num = 0;
+    
+    for(int i = 0; i < romanNum.length(); i++) 
+    {
+        mult5 = converterHelper(romanNum[i]) * 5;
+        mult10 = converterHelper(romanNum[i])  * 10;
+        
+        check1 = mult5 == converterHelper(romanNum[i + 1]);
+        check2 = mult10 == converterHelper(romanNum[i + 1]);
+        // if number is within edge case set for example 4, 9, 19, etc...
+        if(check1 || check2) 
+        {
+            a = converterHelper(romanNum[i + 1]);
+            b = converterHelper(romanNum[i]);
+            num += a - b;
+            i = i+1;
+            
+        } 
+        else 
+        {
+            num += converterHelper(romanNum[i]);
+        } 
+    }
+    return num; 
+}
+
+int main()
+{
+    string test3 = "III";
+    cout << test3 << ":" << romanToIntConverter(test3) << endl;
+    string test4 = "LVIII";
+    cout << test4 << ":" << romanToIntConverter(test4) << endl;
+    string test5 = "MCMXCIV";
+    cout << test5 << ":" << romanToIntConverter(test5) << endl;
+    return 0;
+}
