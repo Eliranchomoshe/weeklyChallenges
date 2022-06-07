@@ -1,0 +1,118 @@
+/* Challenge: 
+ * Given a string s containing the characteres '(',')','{','}', '[', and ']', 
+ * determine if input string is valid.
+ */
+
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+// provides closing bracket counterpart. Return 'n' if not found
+char bracketsCounterpart(char c) 
+{
+    char def = 'n';
+    
+    if (c == ')') 
+    {
+        return '(';
+    }
+    if (c == '}')
+    {
+        return '{';
+    }
+    if (c == ']')
+    {
+        return '[';
+    }
+    return def;
+}
+
+// checks if charachter is a variation of opening bracket
+bool isOpening(char c) 
+{
+    bool cCondition = (c == '(' || c == '{' || c == '[');
+    if (cCondition) 
+    {
+        return true;
+    }
+    return false;
+}
+
+// checks if charachter is a variation of closing bracket
+bool isClosing(char c) 
+{
+    bool cCondition = (c == ')' || c == '}' || c == ']');
+    if (cCondition) 
+    {
+        return true;
+    }
+    return false;
+}
+
+// function intended to check if a bracket string is valid 
+// within the constraints of the problem
+bool validator(string phrase) 
+{
+    int count = 0;
+    stack<char> s;
+   s.push(phrase[0]);
+
+    for(int i = 0; i < phrase.length(); i++)
+    {
+        if(isOpening(phrase[i]))
+        {
+           s.push(phrase[i]);
+           count++;
+        }
+        else if(isClosing(phrase[i])) // have to compare agaisnt current stack top
+        {
+            if(bracketsCounterpart(phrase[i]) == s.top())
+            {
+              s.pop();
+              count--;
+            } 
+            else if(bracketsCounterpart(phrase[i]) != s.top())
+            {
+              count++;  
+            }
+              
+        }
+    }
+    
+   
+    if(count == 0) {
+        return true;
+    }
+    return false;
+}
+
+// function intended to provide user print out
+void printOut(string s)
+{
+    string test = "()";
+    bool valid = validator(s);
+    
+    if(valid) 
+    {
+        cout << s << " is valid" << endl;
+    } 
+    else 
+    {
+        cout << s << " is not valid" << endl;
+    }
+}
+
+// main driver
+int main()
+{
+    
+    printOut("()");
+    printOut("({[]})");
+    printOut("()[]{}");
+    printOut("(}");
+    printOut(")(");
+    printOut(":):):):):)");
+
+    return 0;
+}
