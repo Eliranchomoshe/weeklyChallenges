@@ -1,0 +1,99 @@
+/* Challenge: 
+ * Add one to the numerical value of a given array with the contraint of one digit per element.
+ * For example, input of {9} will printout [1,0].
+ */
+ 
+ #include <iostream>
+#include <math.h>
+
+using namespace std;
+
+// function intended to evaluate array value and one to it. 
+// example [5,5] changes te value to [5,6]
+void eval(int inputArray[], int size)
+{
+    int temp = 0;
+    int temp2 = 0;
+    for(int i = 0; i < size; i++) 
+    {
+        temp += inputArray[i] * int(pow(10, size - 1 - i));
+    }
+    
+    temp += 1;
+    
+    for(int i = 0; i < size; i++) 
+    {
+        temp2 = temp / int(pow(10, size - i - 1)); 
+        inputArray[i] = temp2;
+        temp = temp - inputArray[i] * int(pow(10, size - i - 1));
+    }
+}
+
+// function intended to print array in requested format for program
+void formattedPrintOut(int inputArray[], int size) 
+{
+    if (inputArray[0] == 10 && size == 1)
+    {
+            cout <<  "[1, 0]" << endl;
+    }
+    else 
+    {
+        cout << "[";
+        for(int i = 0; i < size - 1; i++) 
+        {
+            if (inputArray[i] == 10)
+            {
+                cout <<  "1, 0, ";
+            } 
+            else
+            {
+                cout << inputArray[i] <<  ", ";
+            }
+        }
+    
+        cout << inputArray[size - 1] << "]" << endl;
+    }
+    
+}
+
+
+int main()
+{
+    // //[4,2,0,4,2,0]
+    int size = 6;
+    int arry[size] = {4,2,0,4,1,9};
+    eval(arry, size);
+    formattedPrintOut(arry, size);
+    
+    //[6,9,6,9]
+    size = 4;
+    int arry2[size] = {6,9,6,8};
+    eval(arry2, size);
+    formattedPrintOut(arry2, size);
+    
+    //[1,2,3]
+    size = 3;
+    int arry3[size] = {1,2,3};
+    eval(arry3, size);
+    formattedPrintOut(arry3, size);
+    
+    //[4,3,2,1]
+    size = 4;
+    int arry4[size] = {4,3,2,1};
+    eval(arry4, size);
+    formattedPrintOut(arry4, size);
+    
+    //[9]
+    size = 1;
+    int arry5[size] = {9};
+    eval(arry5, size);
+    formattedPrintOut(arry5, size);
+    
+    //[9,9,9,9]
+    size = 4;
+    int arry6[size] = {9,9,9,9};
+    eval(arry6, size);
+    formattedPrintOut(arry6, size);
+
+    return 0;
+}
