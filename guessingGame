@@ -1,0 +1,31 @@
+import random
+n = 10 # set to 10 for this example
+pick = random.randint(0, n)
+
+
+# function intended to indicate whether a number is higher, lower, or the same as picked number.
+def guess(num):
+    if num > pick:
+        return -1
+    elif num < pick:
+        return 1
+    else:
+        return 0
+
+
+# main game loop
+def game():
+    run = True
+    while run:
+        num = int(input("Pick a number: "))
+        state = guess(num)
+        if state == 1:
+            print("Higher!")
+        elif state == -1:
+            print("Lower you loser!")
+        else:
+            print("You got it! It was", pick)
+            run = False
+
+
+game()
