@@ -22,7 +22,7 @@ def game():
         if state == 1:
             print("Higher!")
         elif state == -1:
-            print("Lower you loser!")
+            print("Lower!")
         else:
             print("You got it! It was", pick)
             run = False
